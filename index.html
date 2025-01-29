@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smarterHERD - Launching 2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-rgb: 0, 102, 255;
+            --secondary: #ff0099;
+            --secondary-rgb: 255, 0, 153;
+            --background: #ffffff;
+            --foreground: #1a1a1a;
+            --muted: #f3f4f6;
+            --border: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --primary: #60a5fa;
+            --primary-rgb: 96, 165, 250;
+            --secondary: #ff1493;
+            --secondary-rgb: 255, 20, 147;
+            --background: #0B0F19;
+            --foreground: #ffffff;
+            --muted: #1f2937;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hue-rotate 10s infinite linear;
+        }
+
+        .card {
+            background-color: var(--muted);
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.1);
+        }
+
+        .card i {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: var(--muted);
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .coming-soon-badge {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: hue-rotate 10s infinite linear;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list li i {
+            margin-right: 1rem;
+            color: var(--secondary);
+            animation: pulse 2s infinite;
+        }
+
+        .signup-form {
+            background-color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            background-color: var(--background);
+            color: var(--foreground);
+            margin-bottom: 1rem;
+        }
+
+        .signup-form input:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: -1px;
+        }
+
+        .section-divider {
+            border-top: 1px solid var(--border);
+            margin: 4rem 0;
+        }
+
+        .prose {
+            max-width: 65ch;
+            margin: 0 auto;
+        }
+
+        .prose p {
+            margin-bottom: 1.5em;
+            line-height: 1.6;
+        }
+
+        .prose h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1.5em;
+        }
+
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--foreground);
+            opacity: 0.6;
+            font-size: 0.875rem;
+        }
+
+        .nav-section {
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background-color: var(--muted);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            max-width: 200px;
+        }
+
+        .nav-section a {
+            display: block;
+            padding: 0.5rem;
+            color: var(--foreground);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .nav-section a:hover {
+            opacity: 1;
+        }
+
+        @keyframes hue-rotate {
+            from {
+                filter: hue-rotate(0deg);
+            }
+            to {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <i id="theme-icon" data-lucide="sun" class="w-5 h-5"></i>
+    </button>
+
+    <div class="container mx-auto px-4 py-16 max-w-6xl">
+        <!-- Hero Section -->
+        <section id="hero" class="pt-12 md:pt-16 pb-16 space-y-12">
+            <div class="container flex flex-col items-center text-center space-y-8">
+                <div class="text-4xl font-bold tracking-tighter gradient-text mb-4">
+                    smarterHERD
+                </div>
+                <span class="coming-soon-badge">Launching 2025 - Beta Testers Wanted</span>
+                <div class="space-y-4 max-w-3xl">
+                    <h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl gradient-text">
+                        Smart Stock Management for Modern Farmers
+                    </h1>
+                    <p class="mx-auto max-w-[700px] text-foreground/60 md:text-xl">
+                        Track your livestock, monitor profitability, and make data-driven decisions with our powerful farm management platform.
+                    </p>
+                </div>
+                
+                <!-- Email Signup Form -->
+                <div class="signup-form">
+                    <h3 class="text-xl font-bold mb-4">smarterHERD Beta Testers Wanted</h3>
+                    <p class="text-sm opacity-60 mb-6">Sign up to be an early tester. Selected testers will receive 12 months free access when we launch.</p>
+                    <form onsubmit="return submitForm(event)">
+                        <input type="text" name="name" id="name" placeholder="Your Name" required>
+                        <input type="email" name="email" id="email" placeholder="Your Email" required>
+                        <input type="text" name="farm_details" id="farm_details" placeholder="Tell us a little about your farm (Stock types, head count, location, etc.)">
+                        <button type="submit" class="w-full px-6 py-3 rounded-lg bg-muted text-foreground hover:opacity-90 transition-opacity flex items-center justify-center">
+                            Send an email to register your interest <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features Section -->
+        <section id="features" class="py-16 md:py-24">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl mb-12 section-title">
+                    Modern Tools for Modern Farmers
+                </h2>
+                </div>
+                <div class="grid gap-8 md:grid-cols-3">
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="calculator" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Stock Management</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Real-time stock level tracking</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Breed-specific monitoring</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Automatic stock calculations</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Opening/closing balance tracking</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="receipt" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Transaction Recording</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Buy/sell transaction tracking</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Special transactions (births, deaths)</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Market-specific records</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Detailed transaction history</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="line-chart" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Financial Analysis</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Profit/loss tracking</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Market performance analysis</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Breed profitability metrics</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Financial year reporting</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="history" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Animal History</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Individual animal profiles</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Complete timeline tracking</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Custom attributes & alerts</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Group management support</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="book-open" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Farm Notebook</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Event & note tracking</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>File attachments</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Templated entries</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Animal tag linking</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="building-2" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Property Management</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Multi-property support</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Property-specific settings</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Stock type configuration</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Property access control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Features Section -->
+        <section id="technical" class="py-16 border-t border-border/40">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold mb-8 section-title">Technical Features</h2>
+                </div>
+                <p class="text-xl text-foreground/60 mb-12 max-w-3xl mx-auto text-center">
+                    Built with modern technology for reliability, security, and performance.
+                </p>
+                <div class="grid gap-8 md:grid-cols-3">
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="smartphone" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Mobile First Design</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Responsive interface</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Touch-optimized controls</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Offline capabilities</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Fast loading times</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="shield" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Enterprise Security</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>End-to-end encryption</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Secure authentication</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Data backups</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Access controls</li>
+                        </ul>
+                    </div>
+
+                    <div class="card rounded-lg p-6">
+                        <i data-lucide="code-2" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2">Modern Stack</h3>
+                        <ul class="feature-list text-sm">
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Fast page loads and updates</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Reliability and stability</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Smooth, app-like experience</li>
+                            <li><i data-lucide="check" class="w-4 h-4"></i>Modern, intuitive interface</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="py-16 border-t border-border/40">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold mb-8 section-title">From the smarterHERD team</h2>
+                </div>
+                
+                
+                <!-- Featured Blog Post -->
+                <article class="card rounded-lg p-8">
+                    <div class="blog-date mb-4">
+                        <i data-lucide="calendar" class="h-4 w-4"></i>
+                        <time>January 1, 2025</time>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        Simplifying Livestock Management: A Conversation with Adam Clark
+                    </h3>
+                    <div class="prose">
+                        <p class="lead text-xl">
+                            In the world of modern farming, technology is often touted as the solution to every challenge. But for many farmers, the reality is much simpler. We sat down with Adam Clark, beef farmer and founder of smarterHERD, to discuss how his app is changing the game by focusing on what really matters.
+                        </p>
+
+                        <h4 class="text-xl font-bold mt-8 mb-4">The Genesis of smarterHERD</h4>
+                        <p>
+                            <strong>Q: Adam, what inspired you to create smarterHERD?</strong>
+                        </p>
+                        <p>
+                            "I realized that most livestock management apps were overcomplicated and didn't address the core needs of farmers like myself. We created smarterHERD with the motto 'Smart stock management for modern farmers. Track your livestock, monitor profitability, and make data-driven decisions from anywhere.'"
+                        </p>
+
+                        <h4 class="text-xl font-bold mt-8 mb-4">Core Features and Philosophy</h4>
+                        <p>
+                            <strong>Q: What are the key features of your app?</strong>
+                        </p>
+                        <p>
+                            "We focus on two fundamental areas: tracking animal movement on and off the farm, and maintaining health records for individual animals or groups. It's really that simple."
+                        </p>
+
+                        <p>
+                            <strong>Q: Can you elaborate on the animal movement tracking?</strong>
+                        </p>
+                        <p>
+                            "Certainly. We provide a straightforward system for recording purchases, sales, births, deaths, and transfers between properties. This is usually sufficient for maintaining an up-to-date inventory of livestock."
+                        </p>
+
+                        <p>
+                            <strong>Q: And what about health records?</strong>
+                        </p>
+                        <p>
+                            "We offer simple note-taking functionality for vaccination schedules, treatment records, and breeding history. It's organized by animal or group, which serves the purpose for most farms."
+                        </p>
+
+                        <h4 class="text-xl font-bold mt-8 mb-4">Practical Approach to Group Management</h4>
+                        <p>
+                            <strong>Q: Many apps focus on tracking individual animals, but this can be overly detailed for farmers dealing with pens or lots. How does smarterHERD approach this?</strong>
+                        </p>
+                        <p>
+                            "We recognize that most farmers work with groups of animals rather than individuals. Our app is designed to track pens or lots of livestock, which is more practical for real-world operations. We focus on recording breeds and pricing data when animals are bought and sold as a group. This transaction-based approach provides sufficient information for most farm management needs without getting bogged down in individual animal details. Between these points, experienced farmers can gauge the overall health and condition of their stock through visual assessment of the group."
+                        </p>
+
+                        <h4 class="text-xl font-bold mt-8 mb-4">Simplicity as a Feature</h4>
+                        <p>
+                            <strong>Q: How does your app differ from more complex solutions on the market?</strong>
+                        </p>
+                        <p>
+                            "We've intentionally avoided features that often exceed the needs of average farmers, such as individual RFID tracking, continuous weight monitoring, or day-to-day paddock movement tracking. Our focus is on simplicity and efficiency."
+                        </p>
+
+                        <p>
+                            <strong>Q: What benefits does this simplified approach offer?</strong>
+                        </p>
+                        <p>
+                            "It reduces the learning curve, lowers costs, improves efficiency in data entry and retrieval, and leads to better adoption rates. Farmers are more likely to use tools that align closely with their daily needs."
+                        </p>
+
+                        <h4 class="text-xl font-bold mt-8 mb-4">Looking to the Future</h4>
+                        <p>
+                            <strong>Q: Any final thoughts on the future of livestock management technology?</strong>
+                        </p>
+                        <p>
+                            "While advanced technology has its place, there's a strong argument for simplifying livestock management apps. By focusing on core needs, these tools can become more accessible and useful to a broader range of farmers. That's our goal with smarterHERD."
+                        </p>
+
+                        <p class="text-xl mt-12">
+                            In a world where technology often seems to complicate rather than simplify, Adam Clark and smarterHERD are proving that sometimes, less really is more. By focusing on the essential needs of livestock farmers, they're revolutionizing farm management one simple feature at a time.
+                        </p>
+                            </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 border-t border-border/40">
+            <div class="container">
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl section-title">
+                        About smarterHERD
+                    </h2>
+                    </div>
+                    <p class="text-xl text-foreground/60 text-center">
+                        Built by farmers, for farmers. We understand the unique challenges of modern livestock management.
+                    </p>
+                </div>
+
+                <div class="grid gap-16 md:grid-cols-2 mt-16">
+                    <div class="space-y-4">
+                        <h3 class="text-3xl font-bold text-center">Our Mission</h3>
+                        <p class="text-foreground/60">
+                            We're on a mission to modernize farm management. By combining powerful technology with intuitive design, 
+                            we help farmers make better decisions, increase profitability, and spend less time on paperwork.
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-3xl font-bold text-center">Why Choose Us</h3>
+                        <p class="text-foreground/60">
+                            Our platform is designed specifically for farmers and stock agents to manage their client's stock. We understand the unique 
+                            requirements of the industry and provide tools that work the way you do.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid gap-8 md:grid-cols-3 mt-16">
+                    <div class="card p-6">
+                        <i data-lucide="smartphone" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2 text-center">Built for Mobile</h3>
+                        <p class="text-foreground/60">
+                            Designed from the ground up for mobile use, making it perfect for on-site management.
+                        </p>
+                    </div>
+                    <div class="card p-6">
+                        <i data-lucide="users" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2 text-center">Industry Focused</h3>
+                        <p class="text-foreground/60">
+                            Created specifically by Australians for Global farmers and stock agents, with features that match your workflow.
+                        </p>
+                    </div>
+                    <div class="card p-6">
+                        <i data-lucide="shield" class="h-10 w-10 mb-4 text-primary"></i>
+                        <h3 class="text-xl font-bold mb-2 text-center">Enterprise Grade</h3>
+                        <p class="text-foreground/60">
+                            Professional-level security and reliability that you can trust with your business data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center opacity-60 text-sm border-t border-border pt-8">
+            <p>© <span id="current-year"></span> smarterHERD. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.classList.contains('dark')) {
+                body.classList.remove('dark');
+                icon.setAttribute('data-lucide', 'moon');
+            } else {
+                body.classList.add('dark');
+                icon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        }
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Check system preference for dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark');
+            document.getElementById('theme-icon').setAttribute('data-lucide', 'sun');
+            lucide.createIcons();
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const farmDetails = document.getElementById('farm_details').value;
+            
+            const subject = encodeURIComponent("smarterHERD Beta Test program - expression of interest");
+            const body = encodeURIComponent(`I'm a modern farmer looking for a modern tool to manage my herd smarter. Please add me to the smarterHERD beta testing program.
+
+Name: ${name}
+Email: ${email}
+Farm Details: ${farmDetails}`);
+            
+            window.location.href = `mailto:adam@smarterherd.com?subject=${subject}&body=${body}`;
+            return false;
+        }
+    </script>
+</body>
+</html> 
